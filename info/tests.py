@@ -8,6 +8,13 @@ from django.test.client import Client
 
 
 class InfoTest(TestCase):
+    def test_no_attendance__detail(self):
+        s = self.create_student()
+        cr = self.create_course()
+        self.client.login(username='test_user', password='test_password')
+        resp = self.client.get(reverse('attendance_detail', args=(s.USN, cr.id)))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "student has no attendance")
 
     def create_user(self, username='testuser', password='project123'):
         self.client = Client()
