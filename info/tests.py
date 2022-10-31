@@ -6,7 +6,14 @@ from django.test.client import Client
 
 # Create your tests here.
 
-
+   def test_attendance_view(self):
+        s = self.create_student()
+        self.client.login(username='test_user', password='test_password')
+        Assign.objects.create(class_id=s.class_id, course=self.create_course(), teacher=self.create_teacher())
+        response = self.client.get(reverse('attendance', args=(s.USN,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertQuerysetEqual(response.context['att_list'], ['<AttendanceTotal: AttendanceTotal object (1)>'])
+        
 class InfoTest(TestCase):
     def test_no_attendance__detail(self):
         s = self.create_student()
