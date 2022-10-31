@@ -161,14 +161,14 @@ class InfoTest(TestCase):
 
     #teacher
 
-    # def test_attendance_class(self):
-    #     t = self.create_teacher()
-    #     Assign.objects.create(teacher=t, class_id=self.create_class(), course=self.create_course())
-    #     self.client.login(username='test_user', password='test_password')
-    #     resp = self.client.get(reverse('t_clas', args=(t.id, 1)))
-    #     print(resp.content)
-    #     self.assertEqual(resp.status_code, 200)
-    #     self.assertContains(resp, "Enter Attendance")
+    def test_attendance_class(self):
+    t = self.create_teacher()
+    Assign.objects.create(teacher=t, class_id=self.create_class(), course=self.create_course())
+    self.client.login(username='test_user', password='test_password')
+    resp = self.client.get(reverse('t_clas', args=(t.id, 1)))
+    print(resp.content)
+    self.assertEqual(resp.status_code, 200)
+    self.assertContains(resp, "Enter Attendance")
 
     # def test_attendance_class(self):
     #     t = self.create_teacher()
