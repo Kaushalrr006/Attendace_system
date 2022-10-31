@@ -26,6 +26,15 @@ class InfoTest(TestCase):
 
     def create_dept(self, id='CS', name='CS'):
         return Dept.objects.create(id=id, name=name)
+    def test_attendance__detail(self):
+        s = self.create_student()
+        cr = self.create_course()
+        Attendance.objects.create(student=s, course=cr)
+        self.client.login(username='test_user', password='test_password')
+        resp = self.client.get(reverse('attendance_detail', args=(s.USN, cr.id)))
+        self.assertEqual(resp.status_code, 200)
+        self.assertQuerysetEqual(resp.context['att_list'], ['<Attendance: ' + s.name + ' : ' + cr.shortname + '>'])
+
 
     def test_dept_creation(self):
         d = self.create_dept()
